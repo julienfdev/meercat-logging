@@ -5,7 +5,7 @@ import {
   NestMiddleware,
   Optional,
 } from "@nestjs/common";
-import chalk from "chalk";
+import * as chalk from "chalk";
 import { NextFunction, Request, Response } from "express";
 import { performance } from "perf_hooks";
 import { STATUS_CODE_COLOR_MAP } from "./constants/status-code-color-map.constants";
@@ -16,12 +16,31 @@ import {
 import methodColor from "./helpers/method-color";
 import redactPasswords from "./helpers/redact-passwords";
 
+export const MEERCAT_LOGGER = "MEERCAT_LOGGER";
+export const MEERCAT_OPTIONS = "MEERCAT_OPTIONS";
+
+export type MeercatOptions = {
+  name?: string;
+  logErrorDetails?: boolean;
+};
+
 @Injectable()
 export class MeercatLoggingMiddleware implements NestMiddleware {
-  private readonly logger = new Logger("", { timestamp: false });
+  private readonly logger: Logger;
+  private readonly logErrorDetails: boolean = false;
 
-  constructor(@Optional() @Inject("MEERCAT_LOGGER") logger?: Logger) {
+  constructor(
+    @Optional() @Inject(MEERCAT_LOGGER) logger?: Logger,
+    @Optional() @Inject(MEERCAT_OPTIONS) options?: MeercatOptions
+  ) {
     if (logger) this.logger = logger;
+    else {
+      this.logger = new Logger(options?.name || this.constructor.name, {
+        timestamp: false,
+      });
+    }
+    this.logErrorDetails =
+      options?.logErrorDetails !== undefined ? options.logErrorDetails : true;
   }
 
   use(req: Request, res: Response, next: NextFunction) {
@@ -41,17 +60,15 @@ export class MeercatLoggingMiddleware implements NestMiddleware {
               req.header("x-forwarded-for") || req.header("x-real-ip") || req.ip
             } - ${res.statusCode} - ${methodColor(req.method)(req.method)} -`
           )} ${req.url.split("?")[0]} ${chalk.yellow(`+${time}ms`)}`
-        ),
-        "MeercatHttpLogger"
+        )
       );
-      if (res.statusCode >= 400) {
+      if (res.statusCode >= 400 && this.logErrorDetails) {
         this.logger.debug?.(
           `${color(
             `${
               req.header("x-forwarded-for") || req.header("x-real-ip") || req.ip
             } - ${res.statusCode} - ${methodColor(req.method)(req.method)} - `
-          )}${chalk.white(`Query : ${JSON.stringify(req.query)}`)}`,
-          "MeercatHttpLogger"
+          )}${chalk.white(`Query : ${JSON.stringify(req.query)}`)}`
         );
         if (
           req.method === "POST" ||
