@@ -1,0 +1,28 @@
+{
+  "name": "meercat",
+  "version": "1.0.0",
+  "description": "A simple yet effective request logger middleware for Nest JS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "tsc",
+    "build": "tsc"
+  },
+  "keywords": [
+    "NestJS",
+    "Logging",
+    "Morgan",
+    "Middleware"
+  ],
+  "author": "Julien FERAND",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^10.0.3",
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.1",
+    "express": "^4.18.2",
+    "typescript": "^5.1.3"
+  }
+}
