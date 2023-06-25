@@ -14,9 +14,14 @@
   },
   "keywords": [
     "NestJS",
-    "Logging",
-    "Morgan",
-    "Middleware"
+    "logging",
+    "logger",
+    "express",
+    "nest",
+    "morgan",
+    "request",
+    "middleware",
+    "error"
   ],
   "author": "Julien FERAND",
   "license": "ISC",

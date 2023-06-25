@@ -1,10 +1,10 @@
-# MeerCat - NestJS Logging Middleware
+# MeerCat - NestJS Request Logging Middleware
 
 ![Meercat](https://dokitek-public.s3.eu-west-3.amazonaws.com/images/meercat.png)
 
-The name comes from the animal, Meerkat, which always monitors every single event for the good of its colony, and CAT, the UNIX utility.
+The name comes from the animal, Meerkat, which is always extremely focused on its environment in order to protect its colony, and CAT, the UNIX utility which outputs text.
 
-This is a NestJS middleware that serves a simple yet missing functionality in NestJS : logging HTTP requests and errors
+This is a NestJS middleware that serves a simple yet missing functionality in NestJS : logging HTTP requests and errors, like Morgan with Express. It offers several features like customization and detailed error logging
 
 ## Install and Usage
 
