@@ -1,6 +1,6 @@
 {
   "name": "meercat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple yet effective request logger middleware for Nest JS",
   "repository": "https://github.com/julienfdev/meercat-logging",
   "bugs": {
