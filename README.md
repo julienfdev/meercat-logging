@@ -36,12 +36,14 @@ You can customize the logger behaviour by providing the token `MEERCAT_OPTIONS` 
 export type MeercatOptions = {
   name?: string;
   logErrorDetails?: boolean; // default true
+  blacklisted?: string[]
 };
 
 ```
 
 `name` : Customize the logger name
 `logErrorDetails` : logs the query, body and user agent to the console when the request status >= 400. log level: debug
+`blacklisted` : a list of keywords, if the keyword is included in the req.baseUrl, the request won't be logged (can be used to prevent clutter)
 
 Example : 
 ```
